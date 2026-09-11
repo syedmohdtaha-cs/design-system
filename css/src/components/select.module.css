@@ -25,12 +25,18 @@
   transition: var(--duration--fast-01) var(--standard-productive-curve);
 }
 
+.Select-trigger[aria-disabled='true'] {
+  cursor: not-allowed;
+  color: var(--text-disabled);
+}
+
 .Select-trigger--filled {
   background: var(--secondary-light);
   color: var(--text);
 }
 
-.Select-trigger--filled:disabled {
+.Select-trigger--filled:disabled,
+.Select-trigger--filled[aria-disabled='true'] {
   background: var(--secondary-lighter);
   color: var(--text-disabled);
   pointer-events: none;
@@ -76,7 +82,8 @@
   animation-duration: var(--duration--fast-02);
 }
 
-.Select-trigger--outlined:disabled {
+.Select-trigger--outlined:disabled,
+.Select-trigger--outlined[aria-disabled='true'] {
   color: var(--inverse-lightest) !important;
   background: var(--secondary-lightest) !important;
   border: var(--border-width-2-5) solid var(--secondary-lighter) !important;
