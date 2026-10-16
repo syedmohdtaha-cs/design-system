@@ -22,9 +22,17 @@ interface SelectEmptyTemplateProps extends BaseProps {
 export const SelectEmptyTemplate = (props: SelectEmptyTemplateProps) => {
   const contextProp = React.useContext(SelectContext);
 
-  const { maxHeight, withSearch } = contextProp;
+  const { maxHeight, withSearch, setStatusMessage } = contextProp;
 
   const { title, description, children, ...rest } = props;
+
+  const statusText = [title, description].filter(Boolean).join('. ');
+
+  React.useEffect(() => {
+    if (!statusText || !setStatusMessage) return undefined;
+    setStatusMessage(statusText);
+    return () => setStatusMessage('');
+  }, [statusText, setStatusMessage]);
 
   const searchInputHeight = 33;
 
@@ -40,8 +48,6 @@ export const SelectEmptyTemplate = (props: SelectEmptyTemplateProps) => {
       className="px-7 d-flex justify-content-center align-items-center"
       style={wrapperStyle}
       data-test="DesignSystem-Select-EmptyState--wrapper"
-      aria-live="polite"
-      role="status"
       {...rest}
     >
       <div

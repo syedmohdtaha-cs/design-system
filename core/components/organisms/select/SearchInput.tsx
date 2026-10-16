@@ -19,7 +19,7 @@ export interface SelectInputProps extends Omit<InputProps, 'onChange'> {
 
 export const SearchInput = (props: SelectInputProps) => {
   const contextProp = React.useContext(SelectContext);
-  const { setWithSearch, maxHeight, listRef, setFocusedOption, setOpenPopover, triggerRef } = contextProp;
+  const { setWithSearch, maxHeight, listRef, setFocusedOption, setOpenPopover, triggerRef, notifySearch } = contextProp;
   const { onChange, onClear, size = 'regular', ...rest } = props;
 
   React.useEffect(() => {
@@ -27,6 +27,7 @@ export const SearchInput = (props: SelectInputProps) => {
   }, [maxHeight]);
 
   const searchHandler = (event: any) => {
+    notifySearch?.();
     if (onChange) onChange(event.target.value);
   };
 

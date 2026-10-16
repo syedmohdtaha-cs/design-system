@@ -26,6 +26,10 @@ export type ContextProps = {
   size?: TListboxSize;
   styleType?: SelectStyleType;
   error?: boolean;
+  /** Sets the message announced to screen readers through the status region rendered inside the open popover. */
+  setStatusMessage?: (message: string) => void;
+  /** Called on every search input change, so a status message can wait until the user stops typing. */
+  notifySearch?: () => void;
   /** Index of the option that has tabindex=0 (roving tabstop). -1 when none (e.g. search focused or empty list). */
   rovingIndex?: number;
 };

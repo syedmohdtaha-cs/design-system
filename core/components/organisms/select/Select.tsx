@@ -17,6 +17,7 @@ import {
   mapInitialValue,
 } from './utils';
 import SelectFooter from './SelectFooter';
+import SelectStatusRegion from './SelectStatusRegion';
 import { BaseProps, extractBaseProps } from '@/utils/types';
 import uidGenerator from '@/utils/uidGenerator';
 import { PopoverProps } from '@/index.type';
@@ -231,6 +232,9 @@ export const Select = React.forwardRef<SelectMethods, SelectProps>((props, ref) 
   const [highlightFirstItem, setHighlightFirstItem] = React.useState<boolean>(false);
   const [highlightLastItem, setHighlightLastItem] = React.useState<boolean>(false);
   const [rovingIndex, setRovingIndex] = React.useState<number>(-1);
+  const [statusMessage, setStatusMessage] = React.useState('');
+  const [searchVersion, setSearchVersion] = React.useState(0);
+  const notifySearch = React.useCallback(() => setSearchVersion((version) => version + 1), []);
   const [popoverStyle, setPopoverStyle] = React.useState<PopoverProps['customStyle']>({ width: popoverWidth || width });
   const listboxId = React.useRef(`select-listbox-${uidGenerator()}`).current;
 
@@ -511,6 +515,8 @@ export const Select = React.forwardRef<SelectMethods, SelectProps>((props, ref) 
     styleType,
     error,
     rovingIndex,
+    setStatusMessage,
+    notifySearch,
   };
 
   return (
@@ -530,6 +536,7 @@ export const Select = React.forwardRef<SelectMethods, SelectProps>((props, ref) 
           <OutsideClick onOutsideClick={onOutsideClickHandler}>
             <div role="presentation" tabIndex={-1} ref={listRef} onKeyDown={handlePopoverKeyDown}>
               {children}
+              <SelectStatusRegion message={statusMessage} searchVersion={searchVersion} />
             </div>
           </OutsideClick>
         </Popover>
